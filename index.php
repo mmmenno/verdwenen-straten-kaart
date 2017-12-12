@@ -136,6 +136,10 @@
 			layer.on({
 		        click: whenClicked
 		    });
+		    console.log(layer.feature.properties);
+		    if(typeof layer.feature.properties.bb == 'undefined'){
+		    	layer.setStyle({color: "#B6C4FF"});
+			}
 	    },
 	    //
         pointToLayer: function (feature, latlng) {
@@ -157,7 +161,13 @@
     });
 
     function whenClicked(e) {
-    	streets.setStyle({color: "#FD6368"});
+    	streets.eachLayer(function(layer) {
+			if(typeof layer.feature.properties.bb == 'undefined'){
+		    	layer.setStyle({color: "#B6C4FF"});
+			}else{
+				layer.setStyle({color: "#FD6368"});
+			}
+	    });
     	$('#album').html('');
         this.setStyle({color: "#fff"});
 		var props = e['target']['feature']['properties'];

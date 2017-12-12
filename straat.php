@@ -17,7 +17,7 @@ $sparql = new EasyRdf_Sparql_Client('https://api.adamnet.triply.cc/datasets/menn
 			?bbitem foaf:Depiction ?imgurl .
 			?bbitem dc:type ?type .
   			?bbitem sem:hasBeginTimeStamp ?year .
-			FILTER(?type=\"foto\")
+			FILTER(?type NOT IN(\"bouwtekening\",\"kaart\"))
 			} 
 			ORDER BY ?year
 			LIMIT 20
