@@ -8,7 +8,7 @@ EasyRdf_Namespace::set('dc', 'http://purl.org/dc/elements/1.1/');
 EasyRdf_Namespace::set('foaf', 'http://xmlns.com/foaf/0.1/');
 EasyRdf_Namespace::set('sem', 'http://semanticweb.cs.vu.nl/2009/11/sem/');
 
-$sparql = new EasyRdf_Sparql_Client('https://api.adamnet.triply.cc/datasets/menno/straten/containers/test/sparql');
+$sparql = new EasyRdf_Sparql_Client('https://api.adamnet.triply.cc/datasets/menno/alles/containers/test/sparql');
 
 
  $result = $sparql->query(
@@ -16,7 +16,7 @@ $sparql = new EasyRdf_Sparql_Client('https://api.adamnet.triply.cc/datasets/menn
 			?bbitem dct:spatial <" . $_GET['streeturi'] . "> .
 			?bbitem foaf:Depiction ?imgurl .
 			?bbitem dc:type ?type .
-  			?bbitem sem:hasBeginTimeStamp ?year .
+  			OPTIONAL { ?bbitem sem:hasBeginTimeStamp ?year } .
 			FILTER(?type NOT IN(\"bouwtekening\",\"kaart\"))
 			} 
 			ORDER BY ?year
@@ -27,10 +27,17 @@ $sparql = new EasyRdf_Sparql_Client('https://api.adamnet.triply.cc/datasets/menn
 if($result->numRows()){
 	echo '<div id="pics">';
 	foreach ($result as $row) {
+		echo '<div class="pic">';
 		echo '<a title="' . substr($row->year,0,4) . '" target="_blank" href="' . $row->bbitem . '">';
 		echo '<img src="' . $row->imgurl . '">';
 		echo '</a>';
-		echo '<span>' . substr($row->year,0,4) . '</span>';
+		if(isset($row->year)){
+			$year = substr($row->year,0,4);
+		}else{
+			$year = "onbekend";
+		}
+		echo '<span>' . $year . '</span>';
+		echo '</div>';
 	}
 	echo '</div>';
 }
