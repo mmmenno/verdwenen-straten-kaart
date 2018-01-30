@@ -9,21 +9,24 @@ EasyRdf_Namespace::set('geo', 'http://www.opengis.net/ont/geosparql#');
 EasyRdf_Namespace::set('foaf', 'http://xmlns.com/foaf/0.1/');
 EasyRdf_Namespace::set('dct', 'http://purl.org/dc/terms/');
 
-$sparql = new EasyRdf_Sparql_Client('https://api.adamnet.triply.cc/datasets/menno/alles/containers/test/sparql');
+$sparql = new EasyRdf_Sparql_Client('https://api.data.adamlink.nl/datasets/menno/alles/services/alles/sparql');
 
- $result = $sparql->query(
-    	"SELECT ?straat ?label ?wkt ?begin ?end (SAMPLE(?bbitem) AS ?bb) {
-		  ?straat sem:hasEarliestEndTimeStamp ?end ;
-		          sem:hasEarliestBeginTimeStamp ?begin ;
-		          a hg:Street ;
-		          geo:hasGeometry/geo:asWKT ?wkt ;
-		          rdfs:label ?label .
-		  OPTIONAL { ?bbitem dct:spatial ?straat } .
-		  FILTER (year(xsd:dateTime(?end)) < 2017)
-		} 
-		GROUP BY ?straat ?end ?begin ?wkt ?label
-		"
-);
+$sparqlquery = "SELECT ?straat ?label ?wkt ?begin ?end (SAMPLE(?bbitem) AS ?bb) {
+					  ?straat sem:hasEarliestEndTimeStamp ?end ;
+					          sem:hasEarliestBeginTimeStamp ?begin ;
+					          a hg:Street ;
+					          geo:hasGeometry/geo:asWKT ?wkt ;
+					          rdfs:label ?label .
+					  OPTIONAL { ?bbitem dct:spatial ?straat } .
+					  FILTER (year(xsd:dateTime(?end)) < 2017)
+					} 
+					GROUP BY ?straat ?end ?begin ?wkt ?label
+					";
+
+//echo $sparqlquery;
+
+$result = $sparql->query($sparqlquery);
+
 
 $fc = array("type"=>"FeatureCollection","features"=>array());
 
