@@ -8,7 +8,7 @@ EasyRdf_Namespace::set('dc', 'http://purl.org/dc/elements/1.1/');
 EasyRdf_Namespace::set('foaf', 'http://xmlns.com/foaf/0.1/');
 EasyRdf_Namespace::set('sem', 'http://semanticweb.cs.vu.nl/2009/11/sem/');
 
-$sparql = new EasyRdf_Sparql_Client('https://api.data.adamlink.nl/datasets/AdamNet/all/services/endpoint/sparql');
+$sparql = new EasyRdf_Sparql_Client('https://api.druid.datalegend.net/datasets/adamnet/all/services/endpoint/sparql');
 
 $sparqlquery = "SELECT * WHERE {
 						?bbitem dct:spatial <" . $_GET['streeturi'] . "> .

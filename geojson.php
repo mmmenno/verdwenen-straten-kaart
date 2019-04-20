@@ -9,7 +9,7 @@ EasyRdf_Namespace::set('geo', 'http://www.opengis.net/ont/geosparql#');
 EasyRdf_Namespace::set('foaf', 'http://xmlns.com/foaf/0.1/');
 EasyRdf_Namespace::set('dct', 'http://purl.org/dc/terms/');
 
-$sparql = new EasyRdf_Sparql_Client('https://api.data.adamlink.nl/datasets/menno/alles/services/alles/sparql');
+$sparql = new EasyRdf_Sparql_Client('https://api.druid.datalegend.net/datasets/adamnet/all/services/endpoint/sparql');
 
 $sparqlquery = "SELECT ?straat ?label ?wkt ?begin ?end (SAMPLE(?bbitem) AS ?bb) {
 					  ?straat sem:hasEarliestEndTimeStamp ?end ;
